@@ -1,24 +1,30 @@
-# Major Review — internal author checklist (not part of the paper)
+# Major Review — internal author notes (not part of LaTeX/PDF)
 
-This file keeps editorial instructions, evidential cautions and action items OUT of `main.tex` and the rendered Major Review PDF. Remove or resolve items before submission. Updated after the 40-point review on 2026-11-15.
+These are editorial tasks only. The manuscript itself uses scholarly statements, rather than instructions addressed to the author. Revised 2026-11-15 against the 22 follow-up comments and both uploaded prior papers.
 
-## Before submitting the Major Review
+## Required before Major Review submission
 
-- [ ] **P1 — Verify preliminary work against experiment records.** The draft describes NarrativeGaze, the `From Dialogue to Performance` authoring prototype, and the context ablation. Add exact model name(s), prompt/configuration, stimuli, participant counts, tested conditions and results from the actual study. The active `ExpreGaze` repository config uses `gpt-5-mini`, while the prior manuscript reported a different model version; do NOT merge the two experiments.
-- [ ] **P2 — Update OscarDP stage status.** The current main.tex states that `Bugonia` has reached Stage05, based on the known project status. Replace with verified latest stage, output coverage, examples and failure cases before submission. Indicate what is manually confirmed vs inferred.
-- [ ] **P3 — Gaze baseline scope.** The official S³ project page currently labels code/dataset 'coming soon'. If reproducing an S³-inspired baseline, document which modules were approximated, whether director tags/3D scene metadata were available, and the exact information given to each method. Do not call an inspired implementation a reproduction of official S³.
-- [ ] **P4 — Acting framework sources.** Confirm chapter/page-level support for Stanislavski super-objective/objective/unit, Hagen's Six Steps (`A Challenge for the Actor`), Weston's playable action and subtext, and Hooks's animation acting concepts. The hierarchy is informed by these texts but the operational annotation format is designed for this research.
-- [ ] **P5 — Dataset annotations and quality.** Define objective/tactic/beat instructions with examples, and independent annotation protocol. Keep observable (AU/gaze/head/shot/timing) and interpreted (objective/tactic/intent/affect) labels separate; report disagreement and ambiguous cases rather than silently converting model rationales to facts.
-- [ ] **P6 — Film permissions and research governance.** Restrict copyrighted source material rather than publishing full clips/scripts. This alone does NOT grant rights to copy, process, train on, or distribute derived data. Verify source access, storage, permitted research/training usage, ethics approvals and institution guidance before expanding or releasing artifacts.
-- [ ] **P7 — Evaluation design.** Specify which independent reviewers will rate acting plans, how many clips/participants, allocation/order counterbalancing, blind conditions, measurements, and analysis. Separate planning evaluations from rig motion quality and independent viewer perception.
-- [ ] **P8 — Mapping experiment factors.** Motion representation: preset vs fine-grained AU/rig curves. Coordination: independent vs jointly constrained gaze/face/head timing. A clean comparison is (preset + independent), (fine-grained + independent), (fine-grained + joint); first change tests representation, second tests coordination.
-- [ ] **P9 — Generalisation.** Film-disjoint train/test, actor/character hold-outs when possible, genre/language/era coverage, and external non-Oscar test clips; do not claim Oscar nominees are representative of acting generally.
-- [ ] **P10 — Research plan.** Verify the supervisor-approved milestones and PhD length. The draft contains a proposed staged plan through 2028 and a future-work extension for shot-aware/2D generation.
-- [ ] **P11 — Citation audit.** Bibliographic entries are present, but exact books/editions/URLs and in-text support should receive final page/chapter checks; compile with LaTeX + BibTeX to catch warnings. The public sources consulted for S³ and MIG are their project page and ACM primary paper.
+- [ ] **FIGURE — Acting choices across beats.** Add an original illustration under Section 2.1 showing the same scene objective (conceal information) expressed through changing tactics: reassurance -> gaze aversion/brief hesitation -> confrontation. Clearly separate intention/tactic from visible gaze, AU and head actions. Decide whether to include the figure in the literature section or framework.
+- [ ] **Empirical records.** Check the source of the prior Study A (16 participants; four scenes; mean intention fit 5.09 vs 5.97; mean satisfaction 5.06 vs 6.03; fixed workflow order) and Study B (six scenes, 48 text proposals; context fit 4.80 vs 5.08; timing 4.84 vs 5.09). Do not present these as a rendered gaze perceptual study. The previous PDF is the primary reference for the descriptive numbers.
+- [ ] **NarrativeGaze status.** Verify specific implementation completed, model generation conditions, sample size and rendered results. Do not describe the CHI manuscript as accepted or published. A focused rendered gaze experiment and fair speech/scene and S3-inspired comparisons remain planned.
+- [ ] **OscarDP status.** Replace Bugonia Stage05 if the stage has advanced. Include a verified worked sequence, manually reviewed vs inferred counts, cross-shot examples, and actual extraction coverage.
+- [ ] **Compact performance-plan schema.** Decide minimal runtime fields (character, trigger/anchor, gaze target, change/behavior) vs optional beat-level acting explanations. Dataset labels (shot, face track, AU, head pose etc.) are **training/annotation fields**, not required runtime inputs. Check token cost empirically.
+- [ ] **S3 baseline input fairness.** Its Director-tagged script and 3D scene are real inputs, and the method does not automatically derive mental-state/acting tags from dialogue. State whether a specific experiment compares the full published method or a documented inspired implementation.
+- [ ] **Animation metrics applicability.** LVE/MVE/FDD require registered/paired mesh reference data and are NOT directly valid for arbitrary Maya rigs or abstract semantic choices. For rig-only work, define kinematic and event-timing measures formally. Cite the benchmark review by Haque et al. (2025).
+- [ ] **Dataset reliability.** Prepare an annotation guide for objective, beat and tactic; double-label a stratified sample; use human-reviewed event/onset references; publish disagreement and ambiguous cases. Cross-shot spatial/VLM results need uncertainty logging.
+- [ ] **External validity.** Hold out films (and actors where data allow), report style/genre/language/era coverage, and analyse a small non-Oscar external sample.
+- [ ] **Copyright/training review.** Restrict access to film clips and screenplays; do not assume that avoiding public release alone authorises copying, processing or training. Check Bournemouth University guidance and source agreements.
+- [ ] **Literature audit.** Check page/chapter references in Weston, Stanislavski, Hagen, Caine, Hooks and Rabiger. Confirm any preprint publication updates. Current bibliography entries include 2026 TalkingEyes and 2025 MIG/SIGGRAPH Asia work.
+- [ ] **Compile and proofread.** Rebuild LaTeX with BibTeX (or latexmk); inspect undefined citations, missing glyphs, figures and PDF layout. GitHub writing tools do not execute LaTeX builds here.
+- [ ] **Scope.** Future shot planning and 2D video conditioning should remain separate from the core 3D Facial Performance RQs. Do not add a new CHI-style animator study: the 16-person authoring evaluation has already been performed. The new primary studies are rendered perception and technical realisation.
 
-## Writing principles from the 40-point review
+## Source documents reviewed
 
-- Keep the argument in the paper: *existing work -> remaining limitation -> this project's response*; do not insert meta-critique like 'this is not novel' or 'this must be evaluated'.
-- Use `main.tex` for scholarly argument and planned method in declarative language. Keep deadlines, proof warnings, status reminders, input fairness notes and editorial caveats here.
-- Keep **industry-ready editable 3D** separate from **film/shot context as acting data**. The former motivates the output medium; the latter motivates sampling cinematic performances.
-- Keep **Narrative-Aware Gaze Planning** in Preliminary Work, not as a new methodology stage. Future work moves from it to the acting dataset, joint planning, and 3D realisation.
+- Probationary Review: Expressive 3D Gaze Animation Generation (6 February 2026). Contains gaze theory, scene/saliency, conversation, stylistic gaze, actor performance animation, proxies and quantitative metrics.
+- From Dialogue to Performance: Context-Aware and Editable LLM Assistance for Conversational Character Animation (2026 manuscript). Contains 35 prior references, the proposed semantic tag representation, the existing Maya/JALI authoring study and context ablation.
+
+## Writer's structure rules
+
+- Integrate cited authors into the argument where possible: e.g. `\citet{weston1996directing}` rather than piling references at sentence ends.
+- In literature: existing method -> its specific task/boundary -> remaining cinematic acting problem. Do not reproduce project methodology inside every literature subsection.
+- Industry need for editable 3D is distinct from sampling professionally performed cinematic films. Shot metadata are film-analysis context, not mandatory generator input.
