@@ -1,9 +1,10 @@
-# Track only LaTeX sources, bibliography databases, and this file.
+# Track LaTeX sources, bibliography databases, review notes, and this file.
 *
 !*/
 !*.tex
 !*.bib
 !/.gitignore
+!/REVIEW_NOTES.md
 
 # Keep local tool configuration private.
 /.agents/
