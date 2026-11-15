@@ -1,55 +1,127 @@
-\documentclass{article}
-
-\title{Major Review: Narrative-Driven 3D Facial Performance Animation Generation}
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{lmodern}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{natbib}
+\setstretch{1.18}
+\title{Narrative-Driven 3D Facial Performance Animation Generation\\\large PhD Major Review Briefing Paper --- Working Draft}
 \author{Siyao Du}
-
+\date{November 2026}
 \begin{document}
-
 \maketitle
-
-\begin{abstract}
-Write your abstract here.
-\end{abstract}
+\noindent\textit{Draft note:} Completed preliminary work is distinguished from proposed research. Exact empirical figures and software model versions require verification against project records.
 
 \section{Introduction}
+In film animation and narrative-driven games, character performance communicates story events, personality, and interpersonal intentions. Dialogue scenes involve not only speech but also gaze, facial expressions, and head movements; these behaviours influence attention, interaction, and audience interpretation \citep{ruhland2015review}. This research uses \emph{facial performance} for the coordination of observable gaze, facial actions, and head movement in conversational acting. Speech articulation is an essential supporting process.
+
+Expressiveness does not necessarily imply more frequent or stronger motion. A brief gaze aversion, delayed reaction, or deliberately restrained expression may communicate a dramatic intention more effectively than an overt emotional display. Acting and directing traditions analyse behaviour through given circumstances, objectives, obstacles, and actions \citep{stanislavski1936actor,weston1996directing,hooks2023acting}. Thus, the challenge is not only how to synthesise plausible motion, but also what a character should do, when the behaviour should change, and why a choice may support a particular narrative interpretation.
+
+In 3D production, artists interpret scripts and direction, explore alternatives, and refine keyframes using rig controls. Shot scale, staging, camera framing, and continuity influence how a performance is presented \citep{caine1990acting,rabiger2020directing}. Automated output should therefore remain editable within a rigged-character workflow, rather than exist only as a rendered video.
+
+Speech-driven animation has advanced lip synchronisation and animator-friendly control \citep{edwards2016jali,zhou2018visemenet}. Gaze-generation research has already incorporated speech, directorial scripts, and 3D scene context \citep{pan2024s3}; recent LLM-based work has generated facial AU animations from context-rich situations \citep{durupinar2025prompt}. It would therefore be inaccurate to claim that existing methods do not use semantics. Instead, this research addresses how acting choices can be proposed when the script lacks detailed motion direction, how those choices can be temporally coordinated across facial channels, and how they can be realised as editable animation.
+
+The project investigates an interpretable \emph{performance plan} linking narrative understanding and 3D motion. The framework envisages three modes: narrative inference from dialogue and story context; compliance with explicit acting direction; and local editing of an existing plan without losing satisfactory choices. The first stage studies conversational gaze, then extends to coordinated gaze, facial expression, and head behaviour. Full-body performance, autonomous shot generation, and 2D video synthesis are outside the core research scope.
 
 \section{Literature Review}
-
 \subsection{Character Acting \& Narrative}
+Acting theory provides a language for purposeful behaviour rather than reducing performance to an emotion label. Stanislavski emphasises objectives and continuity of action \citep{stanislavski1936actor}. Hagen addresses circumstances, relationships, and practical construction of a role \citep{hagen1973respect}. Weston discusses playable actions, script analysis, and communication between directors and actors \citep{weston1996directing}. Caine examines on-camera acting, including close-ups and continuity \citep{caine1990acting}; Rabiger and Hurbis-Cherrier connect acting direction with wider film technique \citep{rabiger2020directing}. Hooks relates objectives, obstacles, thinking, and action to animation production \citep{hooks2023acting}.
+
+Together, these sources motivate a proposed hierarchy from character circumstances and long-term goals through scene objectives and relationships to local dramatic beats, tactics, and observable performance actions. This is an operational annotation proposal, not a universally accepted taxonomy. A film captures visible behaviour rather than verified access to the actor's internal motives; interpretive explanations must not be treated as equivalent to measured motion.
 
 \subsection{Facial Performance Animation}
+The Facial Action Coding System describes observable muscle-related facial actions in terms of Action Units (AUs) \citep{ekman2002facs}. However, an AU does not by itself specify an emotion or dramatic intention. JALI generates expressive, editable lip synchronisation from speech and transcripts \citep{edwards2016jali}, while VisemeNet produces audio-driven speech curves suited to animator-centric rigs \citep{zhou2018visemenet}. These systems offer components that can be retained rather than reimplemented; industrial editability alone is not a new contribution.
+
+Gaze and head motion form a complementary non-verbal channel. Ruhland et al.\ survey the interaction of eyes, eyelids, head movement, emotion, attention and conversational context \citep{ruhland2015review}. For the present research, meaningful events include persistent focus, temporary glance, avoidance, target changes, and listener reactions anchored within another person's speech.
 
 \subsection{Context-Aware Animation Generation}
+BEAT uses linguistic and contextual analysis to derive synchronised non-verbal behaviour from text \citep{cassell2001beat}. S$^3$ combines speech, a director-tagged script, and cinematic 3D scene information to produce head and eye animation, including speech-related rhythms and gaze trajectories \citep{pan2024s3}. Thus the relevant distinction is not between context-free previous work and a context-aware new system. The proposed research instead studies upstream inference of acting choices when the screenplay does not explicitly prescribe gaze behaviour. Any comparison with S$^3$ must respect its director-supplied tags and scene-geometry inputs.
+
+A film may cut away from the object of a character's attention. Multi-view gaze target estimation demonstrates advantages from extra views \citep{miao2025multiview}, but asynchronously edited film shots with unknown camera geometry and character movement are not the same as synchronised multi-camera views. This informs, without directly solving, the proposed cross-shot gaze stage.
 
 \subsection{LLM-Based Performance Planning}
+Durupinar and Normoyle use an OCC-guided LLM process to turn textual scenarios into time-varying FACS AU animations for a 3D character \citep{durupinar2025prompt}. Their work shows that a basic semantic-to-AU-to-animation pipeline already exists. OCC is a relevant cognitive appraisal framework \citep{ortony1988cognitive}; however, sustained conversational acting can also involve concealment, persuasion, confrontation, and changes of tactic that need not correspond to a single emotion label.
+
+The proposed performance plan would represent the acting character, target or recipient, meaningful behavioural changes, dialogue- or beat-level triggers, tentative dramatic interpretation, and executable parameters. Open-language interpretation should be kept distinct from constrained machine-readable controls. The research must assess whether this intermediate structure assists narrative communication and editing, rather than presuming its necessity.
 
 \subsection{Controllable Animation Realisation}
+A semantic action cannot directly animate a rig without temporal alignment, mapping, and interpolation. Preset facial states and head/gaze poses provide a feasible initial baseline but can constrain variation. Continuous AUs, gaze calibration, channel coordination, and curve generation offer potential extensions; AU-based realisation itself is already demonstrated \citep{durupinar2025prompt}. A central experimental principle is to keep the input performance plan fixed when comparing realisation methods, so differences cannot be incorrectly attributed to the LLM's interpretation.
 
 \subsection{Research Gaps}
-
+Three linked questions remain valuable. First, existing systems use linguistic, contextual, and directorial information, but generating candidate acting choices from scripts with no detailed motion directions warrants controlled evaluation, especially for listeners and changing character objectives. Second, scenario-driven facial expressions and conversational head--eye motion have been demonstrated, but sustained coordination of gaze, facial actions, and head behaviours against dramatic beats remains a distinct research target. Third, a proposed semantic plan should be evaluated for both perceived communication of intention and practical editing in 3D production. Film-derived data add an uncertainty problem: measured facial movements and inferred character motives are not interchangeable ground truth labels.
 
 \section{Research Questions}
+\noindent\textbf{RQ1 --- Narrative-to-Performance:} How can narrative context, character objectives, and acting principles inform the generation of interpretable and temporally structured facial performance plans?
 
-RQ1 — Narrative-to-Performance: How can narrative context and character intentions be translated into coherent, interpretable, and editable performance plans?
+\medskip
+\noindent\textbf{RQ2 --- Performance-to-Animation:} How can high-level performance plans be translated into temporally coherent, coordinated, and controllable gaze, facial expression, and head motion on rigged 3D characters?
 
-RQ2 — Performance-to-Animation: How can high-level performance plans be translated into temporally coherent, controllable 3D facial animation?
-
-RQ3 — Evaluation: To what extent does narrative-driven performance generation improve perceived character intention, acting quality, and animator usability?
+\medskip
+\noindent\textbf{RQ3 --- Evaluation:} To what extent does narrative-driven facial performance generation improve the communication of intended character performance and the usefulness of animation for animator workflows?
 
 \section{Proposed Framework}
+The framework separates narrative interpretation, semantic planning, and animation realisation. The initial input consists of a script or dialogue with speaker identities, supplemented where possible by previous story events, character profiles, relationships, scene objectives, audio, and shot details. Acting direction may be provided but is not mandatory.
+
+An LLM proposes a shared plan of speaking and listening behaviour, comprising initial states and sparse changes linked to dialogue words or dramatic beats. A proposed event records the performing character, relevant target, temporal trigger, semantic purpose, and gaze/face/head behaviours. The natural-language acting interpretation is not itself a rig command. Validated executable fields provide a bridge to time alignment and motion realisation. This separation should allow an animator to change a specific decision without changing the source dialogue or regenerating the entire plan.
+
+Three modes are proposed: (1) \emph{Narrative Inference}, where the model proposes plausible options from script and context; (2) \emph{Directorial Control}, where explicit acting goals or constraints guide selection; and (3) \emph{Performance Editing}, where accepted decisions can be preserved while local decisions are altered. The first execution route uses existing lip-sync for speech, and generates separate but coordinated gaze, face and head tracks as editable rig parameters. Shot-dependent motion decisions and conditioning other generation backends are potential extensions, rather than immediate proof targets.
 
 \section{Research Methodology}
+\subsection{Narrative-Aware Gaze Planning}
+The first stage isolates conversational gaze planning for both speakers and listeners. For the same dialogue, model inputs will vary between dialogue alone, dialogue with narrative/relationship context, and dialogue with explicit acting direction. The resulting events describe gaze targets, persistent focus, brief checks or aversions, and timing associated with conversational turns or significant words. Baselines should include transparent speech/turn rules and a dialogue-only LLM. If the published S$^3$ implementation remains unavailable, any independently written comparison will be identified as \emph{S$^3$-inspired}, with differences in director annotations and 3D scene inputs made explicit. The planned evaluation will separate semantic plausibility of the plan from how convincingly a fixed rig renders it.
 
-NarrativeGaze: Context-Aware Gaze Animation for Conversational Characters
+\subsection{Narrative-Linked Performance Dataset}
+A film-derived dataset is proposed to connect narrative circumstances to observable facial acting. Oscar-nominated performances provide a purposive starting sample of professional films, not a guarantee of quality, diversity, or representative coverage. MovieNet is a related resource for film organisation and contextual understanding \citep{huang2020movienet}. The planned pipeline includes film-level character profiles; scene-level objectives and relationships; selected candidate sequences; shot and dialogue alignment; facial AU, head and camera-relative gaze measurements; cross-shot target inference; and candidate affect/acting explanations.
 
-Narrative-Driven 3D Facial Performance Animation Generation
+Cross-shot analysis may exploit establishing or medium shots that reveal relative character arrangements, but films do not provide synchronised camera views or stable geometry by default \citep{miao2025multiview}. Each measurement therefore requires confidence tracking and, where necessary, human review. Observable actions, human corrections, and LLM-generated narrative explanations must be stored separately. The latter are interpretations, not verified reports of what the actors intended.
+
+The pilot will assess extraction reliability, disagreement over acting labels, and failure modes on a small inspectable sample before scaling or attempting fine-tuning. Train/test separation should occur at the film level, with further analysis of actors, genres, languages, periods and an external non-Oscar sample where available. Copyright, consent, data storage, training use, and rights to redistribute film-derived material require review; the research should not assume that access to a film authorises public redistribution of clips or extracted faces.
+
+\subsection{Facial Performance Planning}
+The second stage expands from gaze-only decisions to coordinated gaze, face, and head events. A compact acting hierarchy of circumstances, objectives, obstacles, tactics and beats will be operationalised using relevant performance literature \citep{weston1996directing,hooks2023acting}. Proposed comparisons include dialogue-only prompting, context-rich prompting, acting-informed prompting, and conditioning on selected examples. Task-specific fine-tuning of one suitable model is an option, to be justified against strong prompt and few-shot baselines, not assumed to be required.
+
+A single scene may support multiple valid acting interpretations. Rather than forcing a unique psychological ground truth, the system should describe and, where appropriate, offer alternative coherent plans. For explicit acting directions, compliance with author-supplied constraints is a separate criterion from spontaneous narrative plausibility.
+
+\subsection{3D Animation Realisation}
+The execution layer resolves semantic triggers to words or timed scene events and generates editable controls on a rigged 3D character. Initially, gaze target controls and fixed facial/head motion presets will serve as a working baseline beside an existing speech-animation system. Future realisation methods may create continuous AU or rig curves, manage competing channels and introduce shot-aware motion scaling. Comparisons must keep the semantic plan constant while modifying only the mapping and coordination method. Maya/JALI provides one prototype production context; generality to other rigs is a property to test, not a demonstrated outcome.
 
 \section{Preliminary Work}
+\subsection{LLM-Based Performance Animation Prototype}
+An early prototype has explored the use of a pretrained LLM to propose dialogue-anchored, structured performance directives, followed by Python processing and animation execution using Maya and JALI. This work demonstrates a concrete implementation route from semantic decisions to editable 3D character controls. Preliminary observations suggest that formally plausible performance tags do not always yield well-coordinated visible motion, while a restricted menu of executable tags can limit expression. These are observations rather than evidence that the LLM lacks acting or visual knowledge: prompt design, schema constraints, motion presets, timing, and rig mapping could each contribute.
+
+A related manuscript, \emph{From Dialogue to Performance}, investigated editable semantic performance tags and the influence of narrative context on proposed conversational performance. Its text-only context comparison and creator-workflow evaluation provide useful preliminary evidence, but are not equivalent to a controlled perceptual finding that narrative-driven \emph{rendered gaze} communicates intended acting better than a fair speech/scene-driven animation baseline. Original model versions, participant counts, and quantitative findings will be checked against experiment records before they are added to the final briefing paper.
+
+\subsection{OscarDP Dataset Processing Pipeline}
+OscarDP is being developed to organise film and screenplay materials, align available subtitles, character profiles, scenes, shot metadata, and candidate performance sequences. One current film, \emph{Bugonia}, has reached the Stage05 facial/head/gaze measurement stage. Cross-shot gaze target inference and higher-level acting interpretation remain proposed or in progress; a fully verified end-to-end dataset is not claimed. The near-term objective is a traceable example showing how a selected sequence connects narrative context, extracted cues, annotation uncertainty, and reviewed candidate acting explanations. Film-level coverage statistics, extraction errors, and methodological limitations will be added once verified.
 
 \section{Evaluation Strategy}
+Three distinct dimensions will be evaluated. \emph{Planning quality} concerns whether events, targets, timing, and stated intentions are appropriate given a scene. \emph{Realisation quality} concerns whether those same events become continuous and coordinated motion on a rig. \emph{Production usefulness} concerns whether animators can understand and revise the result efficiently.
+
+For RQ1, a comparison between dialogue-only, full-context, and acting-informed performance plans can measure contextual fit, relevant gaze targets, temporal placement, and consistency across a character's actions; any human disagreement about intended interpretation should be reported rather than suppressed. A later adapted model should be compared under the same inputs with strong zero-/few-shot baselines.
+
+For RQ2, the same plan will be mapped by different realisation conditions. Relevant measurements include motion continuity, timing relative to speech, conflicts between facial/head/gaze channels, local edit stability, and rig-level control availability. These outcomes must not be confused with the narrative quality of the original plan.
+
+For RQ3, independent viewers can compare rendered performances while dialogue, audio, camera, rig, lip-sync, and non-target behaviours remain constant. They may judge the attention target, intended character action, and performance fit, while recognising that dramatic scenes can permit more than one valid reading. Animator tasks can compare local plan revision with prompt-level regeneration, recording changes, task time, perceived control, and workload. Order and learning effects must be controlled; an author judging their own output is not a substitute for an independent perception evaluation. Studies involving participants will follow applicable ethics approval and consent requirements.
+
+The dataset will be assessed separately for reliability of observable measurements and quality or ambiguity of interpretive labels. Film-disjoint splits and a limited external sample are proposed to test how well findings generalise beyond the purposively collected source films.
 
 \section{Research Plan}
+The immediate milestone is the December 2026 Major Review: clarify the literature-based acting framework, report the existing gaze/performance prototype accurately, and demonstrate a small end-to-end OscarDP example. Subsequent work is planned as follows:
+\begin{itemize}
+\item \textbf{Late 2026--early 2027:} revise the NarrativeGaze study with a focused animation-based perception evaluation; pilot the acting-label schema and inspect one film-derived sequence.
+\item \textbf{2027:} extend the narrative-linked dataset with human checks; compare context- and acting-informed planning; decide whether one selected model merits task-specific adaptation.
+\item \textbf{Late 2027--2028:} develop and test coordinated facial performance realisation, then evaluate perceptual outcomes and animator workflows on rigged 3D characters.
+\item \textbf{Optional extensions:} explore shot-conditioned performance and transfer of the semantic plan to other media generators only if core 3D results justify this scope.
+\end{itemize}
+Major risks are subjective acting labels, biased film selection, uncertain cross-shot targets, inappropriate trust in LLM explanations, and confusion between planning failures and mapping failures. Proposed mitigations include human review, uncertainty records, film-disjoint evaluation, strong prompting baselines and rendering conditions that isolate the variable under test.
 
 \section{Expected Contributions \& Conclusion}
+The intended contributions are: (1) an acting-informed, temporally structured and editable representation of character facial performance; (2) a documented method and film-derived resource for relating narrative context to observable gaze, face and head cues while separating measurement from interpretation; (3) a controllable pathway from plans to coordinated editable 3D rig motion; and (4) evaluation evidence for the communication of intended performance and the usefulness of generated animation in production-oriented editing. These are aims, not completed empirical claims.
 
+The overarching hypothesis is that explicitly representing temporally grounded acting decisions between scripts and animation controls can make facial performance generation easier to interpret, steer and evaluate. Starting with conversational gaze provides a focused test case, while expansion to face and head coordination forms the central longer-term PhD challenge.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
 \end{document}
