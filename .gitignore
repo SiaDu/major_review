@@ -1,9 +1,8 @@
-# Track only LaTeX sources, bibliography databases, PDFs, and this file.
+# Track only LaTeX sources, bibliography databases, and this file.
 *
 !*/
 !*.tex
 !*.bib
-!*.pdf
 !/.gitignore
 
 # Keep local tool configuration private.
