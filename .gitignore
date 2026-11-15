@@ -1,0 +1,12 @@
+# Track only LaTeX sources, bibliography databases, PDFs, and this file.
+*
+!*/
+!*.tex
+!*.bib
+!*.pdf
+!/.gitignore
+
+# Keep local tool configuration private.
+/.agents/
+/.aws/
+/.codex/
